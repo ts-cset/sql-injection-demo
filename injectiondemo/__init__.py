@@ -11,17 +11,9 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     # Configure the app for each environment
-    app.config.from_mapping(
-        DATABASE=os.path.join(app.instance_path, 'injectiondemo.sqlite')
-    )
+    app.config.from_mapping(DATABASE='injectiondemo')
     if test_config is not None:
         app.config.from_mapping(test_config)
-
-    # Setup instance folder for SQLite database file
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
     # Register database hooks
     from . import db
@@ -37,14 +29,17 @@ def create_app(test_config=None):
             results = []
 
             # get results from db
-            try:
-                results = db.get_db().execute(
-                    "SELECT name, price, quantity FROM products"
-                    " WHERE name LIKE '%" + query + "%'"
-                ).fetchall()
-            except sqlite3.OperationalError as sql_error:
-                print(sql_error)
-                error = 'Sorry, something went wrong...'
+            with db.get_db().cursor() as cur:
+                try:
+                    sql = f"""
+                        SELECT name, price, quantity FROM products
+                        WHERE name ILIKE '%{query}%'
+                    """
+                    cur.execute(sql)
+                    results = cur.fetchall()
+                except Exception as sql_error:
+                    print(sql_error)
+                    error = 'Sorry, something went wrong...'
 
             return render_template('search.html', query=query, results=results, error=error)
 

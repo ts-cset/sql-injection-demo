@@ -2,17 +2,17 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
 
 CREATE TABLE users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
-  type TEXT NOT NULL
+  id serial PRIMARY KEY,
+  username text UNIQUE NOT NULL,
+  password text NOT NULL,
+  type text NOT NULL
 );
 
 CREATE TABLE products (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT UNIQUE NOT NULL,
-  price REAL NOT NULL,
-  quantity INTEGER NOT NULL
+  id serial PRIMARY KEY,
+  name text UNIQUE NOT NULL,
+  price text NOT NULL,
+  quantity text NOT NULL
 );
 
 INSERT INTO users (username, password, type)
@@ -23,21 +23,21 @@ VALUES ('alice', '2bd806c97f0e00af1a1fc3328fa763a9269723c8db8fac4f93af71db186d6e
 
 
 INSERT INTO products (name, price, quantity)
-VALUES ('Claw Hammer', 12.05, 19),
-  ('Sledge Hammer', 13.55, 6),
-  ('4d Nails x 100', 2.49, 4),
-  ('8d Nails x 100', 2.79, 37),
-  ('10d Nails x 100', 3.19, 24),
-  ('12d Nails x 100', 3.49, 13),
-  ('16d Nails x 100', 4.09, 19),
-  ('1/2" Screws x 75', 2.49, 4),
-  ('3/4" Screws x 75', 2.79, 37),
-  ('1" Screws x 75', 3.19, 24),
-  ('1 1/2" Screws x 75', 3.49, 13),
-  ('2" Screws x 75', 4.09, 19),
-  ('Paint Brushes x 5', 18.99, 20),
-  ('Paint Brushes x 3', 12.99, 13),
-  ('1/2" Chisel', 6.99, 4),
-  ('3/4" Chisel', 7.99, 5),
-  ('1" Chisel', 8.99, 6),
-  ('12v Cordless Drill', 71.50, 12);
+VALUES ('Claw Hammer', '$12.05', '19'),
+  ('Sledge Hammer', '$13.55', '6'),
+  ('4d Nails x 100', '$2.49', '4'),
+  ('8d Nails x 100', '$2.79', '37'),
+  ('10d Nails x 100', '$3.19', '24'),
+  ('12d Nails x 100', '$3.49', '13'),
+  ('16d Nails x 100', '$4.09', '19'),
+  ('1/2" Screws x 75', '$2.49', '4'),
+  ('3/4" Screws x 75', '$2.79', '37'),
+  ('1" Screws x 75', '$3.19', '24'),
+  ('1 1/2" Screws x 75', '$3.49', '13'),
+  ('2" Screws x 75', '$4.09', '19'),
+  ('Paint Brushes x 5', '$18.99', '20'),
+  ('Paint Brushes x 3', '$12.99', '13'),
+  ('1/2" Chisel', '$6.99', '4'),
+  ('3/4" Chisel', '$7.99', '5'),
+  ('1" Chisel', '$8.99', '6'),
+  ('12v Cordless Drill', '$71.50', '12');

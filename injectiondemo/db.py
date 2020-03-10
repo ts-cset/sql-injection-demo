@@ -1,4 +1,4 @@
-import sqlite3
+import psycopg2
 
 import click
 from flask import current_app, g
@@ -6,19 +6,18 @@ from flask.cli import with_appcontext
 
 
 def get_db():
-    """Create SQLite connection"""
+    """Create Postgres connection"""
 
     if 'db' not in g:
-        g.db = sqlite3.connect(
-            current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES
+        g.db = psycopg2.connect(
+            f"dbname={current_app.config['DATABASE']}"
         )
 
     return g.db
 
 
 def close_db(e=None):
-    """Close SQLite connection"""
+    """Close Postgres connection"""
 
     db = g.pop('db', None)
 
@@ -30,11 +29,13 @@ def close_db(e=None):
 @with_appcontext
 def init_db_command():
     """Create and populate database tables"""
-
+    
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
+        with db.cursor() as cur:
+            cur.execute(f.read().decode('utf8'))
+            db.commit()
 
     click.echo('Initialized the database.')
 
