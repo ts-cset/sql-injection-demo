@@ -1,0 +1,33 @@
+html {
+  border-top: 5vw solid #a60c3d;
+  color: #222;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+}
+body {
+  margin: 10vw auto;
+  max-width: 1000px;
+  padding: 0 10vw;
+}
+header, section {
+  margin-bottom: 5vw;
+}
+input {
+  font-size: 16px;
+}
+input[type="text"] {
+  width: 200px;
+}
+table {
+  border-collapse: collapse;
+}
+table th, table td {
+  border: 1px solid #222;
+  padding: 0.5rem 1rem;
+}
+table th {
+  border-bottom-width: 2px;
+}
+.error {
+  color: #a60c3d;
+}
